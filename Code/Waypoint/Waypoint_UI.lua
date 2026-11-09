@@ -130,6 +130,8 @@ do -- Pinpoint
     local FOREGROUND_SIZE = UIKit.Define.Fit{ delta = 23 }
     local FOREGROUND_CONTENT = UIKit.Define.Fit{}
     local FOREGROUND_CONTENT_MAXWIDTH = 325
+    -- Keep plate above the diamond (was centered on it and covered the icon).
+    local PLATE_ICON_GAP = 6
 
     local name = "WUIPinpointFrame"
     local id = "WUIPinpointFrame"
@@ -155,8 +157,7 @@ do -- Pinpoint
                         :id("Background", id)
                         :frameLevel(1)
                         :point(UIKit.Enum.Point.Center)
-                        :size(UIKit.UI.P_FILL, UIKit.UI.P_FILL)
-                        :_excludeFromCalculations(),
+                        :size(UIKit.UI.FIT, UIKit.UI.FIT),
 
                     Frame(name .. ".Foreground", {
                         Frame(name .. ".Foreground.Background")
@@ -178,7 +179,9 @@ do -- Pinpoint
                             :_updateMode(UIKit.Enum.UpdateMode.All)
                     })
                         :id("Foreground", id)
-                        :point(UIKit.Enum.Point.Center)
+                        :anchor(UIKit.NewGroupCaptureString("Background.ContextIcon", id))
+                        :point(UIKit.Enum.Point.Bottom, UIKit.Enum.Point.Top)
+                        :y(-PLATE_ICON_GAP)
                         :size(UIKit.Define.Fit{ delta = 23 }, FOREGROUND_SIZE)
                         :frameLevel(5)
                 })
